@@ -1,0 +1,348 @@
+/* ----- RESET & BASE ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #fce4e0 0%, #f8d5d0 100%);
+    padding: 16px;
+    position: relative;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ----- FLOATING HEARTS (background) ----- */
+.heart-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.float-heart {
+    position: absolute;
+    bottom: -40px;
+    font-size: 22px;
+    color: rgba(220, 70, 100, 0.30);
+    animation: floatUp linear infinite;
+    user-select: none;
+    opacity: 0.5;
+    will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.55;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(25deg) scale(1.2);
+        opacity: 0.05;
+    }
+}
+
+/* ----- MAIN CARD / FOLDER CONTAINER ----- */
+.container {
+    width: 100%;
+    max-width: 540px;
+    z-index: 2;
+    position: relative;
+    perspective: 1000px;
+    padding: 0 4px;
+}
+
+.folder-card {
+    background: rgba(255, 245, 240, 0.72);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: clamp(30px, 8vw, 44px) clamp(30px, 8vw, 44px) clamp(24px, 6vw, 34px) clamp(24px, 6vw, 34px);
+    padding: clamp(20px, 5vw, 32px) clamp(16px, 4vw, 28px) clamp(24px, 5vw, 38px);
+    box-shadow: 0 20px 40px rgba(180, 80, 80, 0.18),
+                0 8px 24px rgba(0, 0, 0, 0.06),
+                inset 0 1px 4px rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 200, 190, 0.35);
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+/* subtle glow */
+.folder-card::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 10%;
+    width: 60%;
+    height: 18px;
+    background: radial-gradient(ellipse, rgba(255, 215, 210, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+/* ----- FOLDER TAB (clickable) ----- */
+.folder-tab {
+    display: inline-block;
+    background: linear-gradient(145deg, #ffcdc9, #fbb5b0);
+    padding: clamp(14px, 3.5vw, 18px) clamp(24px, 6vw, 44px);
+    border-radius: 60px;
+    font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+    font-weight: 600;
+    color: #4d2a2a;
+    letter-spacing: 0.5px;
+    box-shadow: 0 7px 0 #b16a6a, 0 10px 22px rgba(190, 90, 90, 0.25);
+    cursor: pointer;
+    transition: 0.12s ease;
+    border: 1px solid #fccac7;
+    margin-bottom: clamp(8px, 2vw, 16px);
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+}
+
+.folder-tab:active {
+    transform: translateY(7px);
+    box-shadow: 0 2px 0 #b16a6a;
+}
+
+.folder-tab i {
+    margin-right: 8px;
+}
+
+/* ----- HIDDEN LETTER (reveal) ----- */
+.love-letter {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.8s cubic-bezier(0.34, 1.2, 0.64, 1),
+                opacity 0.7s ease,
+                margin 0.3s ease;
+    margin-top: 0;
+    transform: scale(0.96);
+    transform-origin: top center;
+}
+
+.love-letter.open {
+    max-height: 1200px;
+    opacity: 1;
+    margin-top: clamp(12px, 3vw, 24px);
+    transform: scale(1);
+}
+
+/* ----- INSIDE LETTER CONTENT ----- */
+.letter-inner {
+    background: rgba(255, 252, 248, 0.65);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border-radius: clamp(24px, 6vw, 36px);
+    padding: clamp(20px, 5vw, 30px) clamp(16px, 4vw, 24px) clamp(20px, 5vw, 28px);
+    box-shadow: inset 0 0 0 1px rgba(255, 210, 200, 0.5),
+                0 8px 18px rgba(150, 70, 70, 0.06);
+    border: 1px solid rgba(255, 220, 210, 0.25);
+}
+
+h1 {
+    color: #b3415b;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: clamp(10px, 2.5vw, 16px);
+    text-shadow: 0 2px 8px rgba(235, 120, 140, 0.15);
+    line-height: 1.2;
+}
+
+.couple-photo {
+    width: clamp(130px, 35vw, 170px);
+    height: clamp(130px, 35vw, 170px);
+    object-fit: cover;
+    border-radius: 50%;
+    border: clamp(4px, 1.2vw, 6px) solid #f7a8a0;
+    box-shadow: 0 8px 22px rgba(200, 100, 100, 0.18);
+    margin: clamp(6px, 1.5vw, 12px) auto clamp(12px, 3vw, 20px);
+    display: block;
+    background: #f3d6d0;
+}
+
+h2 {
+    color: #b34b5a;
+    font-weight: 500;
+    font-size: clamp(1.2rem, 3.8vw, 1.6rem);
+    margin-bottom: clamp(8px, 2vw, 14px);
+    line-height: 1.3;
+}
+
+p {
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    line-height: 1.7;
+    color: #3f2a2a;
+    margin-bottom: clamp(10px, 2.5vw, 16px);
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+.love {
+    color: #c5425c;
+    font-size: clamp(1.2rem, 3.6vw, 1.6rem);
+    font-weight: 600;
+    margin: clamp(12px, 3vw, 20px) 0 clamp(6px, 1.5vw, 10px);
+}
+
+.heart-icon {
+    font-size: clamp(42px, 12vw, 56px);
+    display: inline-block;
+    animation: beat 1.3s infinite ease-in-out;
+    color: #d4576e;
+    margin-top: clamp(4px, 1vw, 10px);
+}
+
+@keyframes beat {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.25); }
+    50% { transform: scale(1); }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.signature {
+    margin-top: clamp(14px, 3.5vw, 22px);
+    font-style: italic;
+    color: #6f4a4a;
+    border-top: 1px dashed #f0bcb4;
+    padding-top: clamp(14px, 3.5vw, 22px);
+    font-size: clamp(0.85rem, 2.2vw, 1rem);
+}
+
+/* ----- RESPONSIVE FINE-TUNING ----- */
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+    .folder-card {
+        padding: 18px 14px 22px;
+        border-radius: 32px 32px 24px 24px;
+    }
+    .folder-tab {
+        padding: 12px 20px;
+        font-size: 1rem;
+        box-shadow: 0 5px 0 #b16a6a, 0 8px 16px rgba(190, 90, 90, 0.2);
+    }
+    .folder-tab:active {
+        transform: translateY(5px);
+        box-shadow: 0 1px 0 #b16a6a;
+    }
+    .letter-inner {
+        padding: 16px 12px 18px;
+        border-radius: 24px;
+    }
+    .couple-photo {
+        width: 120px;
+        height: 120px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+    }
+    p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    .love {
+        font-size: 1.1rem;
+    }
+    .heart-icon {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 380px) {
+    .folder-card {
+        padding: 14px 10px 18px;
+        border-radius: 28px 28px 20px 20px;
+    }
+    .folder-tab {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    .couple-photo {
+        width: 100px;
+        height: 100px;
+    }
+    h1 {
+        font-size: 1.3rem;
+    }
+    .letter-inner {
+        padding: 12px 10px 14px;
+    }
+}
+
+/* ----- LANDSCAPE PHONE ADJUSTMENT ----- */
+@media (max-height: 600px) and (orientation: landscape) {
+    .folder-card {
+        padding: 14px 20px 18px;
+    }
+    .couple-photo {
+        width: 90px;
+        height: 90px;
+        margin: 4px auto 10px;
+    }
+    h1 {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    h2 {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    p {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        line-height: 1.5;
+    }
+    .love {
+        font-size: 1rem;
+        margin: 8px 0 4px;
+    }
+    .heart-icon {
+        font-size: 32px;
+        margin-top: 2px;
+    }
+    .signature {
+        margin-top: 8px;
+        padding-top: 8px;
+        font-size: 0.8rem;
+    }
+    .folder-tab {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        box-shadow: 0 4px 0 #b16a6a;
+    }
+    .love-letter.open {
+        margin-top: 8px;
+    }
+    .letter-inner {
+        padding: 12px 14px;
+    }
+}
+
+/* Prevent zoom on focus for iOS */
+input, textarea, button, .folder-tab {
+    font-size: 16px;
+}

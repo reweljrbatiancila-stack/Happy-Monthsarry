@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Happy Monthsary ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- FLOATING HEARTS (background) -->
+    <div class="heart-rain" id="heartRain"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <div class="folder-card">
+
+            <!-- FOLDER TAB / TRIGGER -->
+            <div class="folder-tab" id="folderTrigger">
+                📁 &nbsp; Open the folder &nbsp; 💌
+            </div>
+
+            <!-- HIDDEN LOVE LETTER (reveal) -->
+            <div class="love-letter" id="loveLetter">
+                <div class="letter-inner">
+
+                    <h1>Happy Monthsary, My Love ❤️</h1>
+
+                    <!-- Using the original images/us.jpg as requested -->
+                    <img src="images/us.jpg" alt="Us ❤️" class="couple-photo" />
+
+                    <h2>To My Beautiful LoveofMyLife 💕</h2>
+
+                    <p>
+                        My Palangga sa tanan, thank you for being part of my life.
+                        Every moment with you is something I will always treasure.
+                        You make my days happier and my heart complete.
+                    </p>
+
+                    <p>
+                        I promise to continue loving you, supporting you,
+                        and creating more beautiful memories together.
+                    </p>
+
+                    <p>
+                        Nya ayaw na tawn sige huna-huna sang di maayu para walay maguba nga relasyon. Mwahhh!!!
+                    </p>
+
+                    <p class="love">
+                        ILoveyousomuch❤️
+                    </p>
+
+                    <p>
+                        Happy Monthsary, Mylove!💖
+                    </p>
+
+                    <div class="heart-icon">
+                        ❤️
+                    </div>
+
+                    <div class="signature">
+                        — always yours, with all my heart
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ----- FLOATING HEARTS (gentle, natural) -----
+            const rainContainer = document.getElementById('heartRain');
+            const heartSymbols = ['❤️', '♥', '❤️', '♥', '💗', '❤️', '♥', '💖', '❤️', '♥'];
+            const heartCount = 30;
+
+            function createFloatingHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'float-heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                const size = 18 + Math.floor(Math.random() * 22);
+                heart.style.fontSize = size + 'px';
+                heart.style.left = Math.random() * 100 + '%';
+                const duration = 14 + Math.random() * 16;
+                heart.style.animationDuration = duration + 's';
+                heart.style.animationDelay = (Math.random() * 18) + 's';
+                heart.style.opacity = 0.20 + Math.random() * 0.40;
+                rainContainer.appendChild(heart);
+
+                heart.addEventListener('animationend', function() {
+                    heart.remove();
+                    createFloatingHeart();
+                });
+            }
+
+            // initial batch
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 180);
+            }
+
+            // replenish if needed
+            setInterval(() => {
+                const existing = document.querySelectorAll('.float-heart').length;
+                if (existing < 24) {
+                    for (let i = 0; i < 3; i++) {
+                        createFloatingHeart();
+                    }
+                }
+            }, 5000);
+
+            // ----- FOLDER REVEAL LOGIC -----
+            const trigger = document.getElementById('folderTrigger');
+            const letter = document.getElementById('loveLetter');
+            let isOpen = false;
+
+            function toggleLetter() {
+                if (isOpen) {
+                    letter.classList.remove('open');
+                    trigger.innerHTML = '📁 &nbsp; Open the folder &nbsp; 💌';
+                    isOpen = false;
+                } else {
+                    letter.classList.add('open');
+                    trigger.innerHTML = '📂 &nbsp; Love letter inside &nbsp; 💕';
+                    isOpen = true;
+                }
+            }
+
+            trigger.addEventListener('click', toggleLetter);
+            // Also support touch events for mobile
+            trigger.addEventListener('touchstart', function(e) {
+                // Prevent double-firing on mobile
+                if (!e.target.closest('.folder-tab')) return;
+            });
+
+            // subtle pulse on the tab when closed
+            setInterval(() => {
+                if (!isOpen) {
+                    trigger.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        trigger.style.transform = 'scale(1)';
+                    }, 300);
+                }
+            }, 4200);
+
+            console.log('💖 open the folder to read the letter!');
+        })();
+    </script>
+
+</body>
+</html>
